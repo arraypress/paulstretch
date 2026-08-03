@@ -1,0 +1,39 @@
+{
+  "name": "@arraypress/paulstretch",
+  "version": "1.0.0",
+  "description": "Extreme time-stretching and ambient texture synthesis — PaulStretch, spectral freeze, granular cloud, and phase vocoder. Deterministic, dependency-free, runs anywhere.",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "paulstretch",
+    "time-stretch",
+    "audio",
+    "dsp",
+    "ambient",
+    "drone",
+    "granular",
+    "spectral-freeze",
+    "phase-vocoder",
+    "fft",
+    "stft"
+  ],
+  "author": "David Sherlock",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arraypress/paulstretch.git"
+  }
+}
