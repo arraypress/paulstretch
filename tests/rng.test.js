@@ -159,3 +159,26 @@ describe('nextPow2', () => {
     assert.equal(nextPow2(-5), 1);
   });
 });
+
+describe('seed coercion', () => {
+  /* The engines hand caller options straight to the RNG. A plain number is the
+   * natural thing to pass — the README's option tables just say `DEFAULT_SEED`
+   * — and before coercion it surfaced as "Cannot mix BigInt and other types"
+   * from inside xorshift, which tells the caller nothing. */
+  it('accepts a number and a bigint interchangeably', () => {
+    const a = new FastRNG(7);
+    const b = new FastRNG(7n);
+    for (let i = 0; i < 8; i++) assert.equal(a.unit(), b.unit());
+  });
+
+  it('still remaps zero away from the xorshift fixed point', () => {
+    const z = new FastRNG(0);
+    assert.notEqual(z.unit(), 0);
+    const zb = new FastRNG(0n);
+    assert.equal(new FastRNG(0).unit(), zb.unit());
+  });
+
+  it('blockSeed takes a numeric base', () => {
+    assert.equal(blockSeed(7, 3), blockSeed(7n, 3));
+  });
+});

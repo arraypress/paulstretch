@@ -69,7 +69,7 @@ const alive = await stretch(source, 200, {
 | `spectralDrift` | `0` | How far the analysis read head wanders from linear, 0..1. |
 | `phaseContinuity` | `0` | How much of the previous window's phase carries over. |
 | `wrapInput` | `false` | Read the source circularly, for seamless loops. |
-| `seed` | `DEFAULT_SEED` | |
+| `seed` | `DEFAULT_SEED` | 64-bit seed. A `number` or `bigint`; same value, same audio. |
 | `onProgress` | -- | Called every 64 windows, then once with `1`. |
 
 **`spectralDrift`** is the single biggest lever on whether an hour-long render still feels alive. At `0` the read head walks the source once at a constant rate, so after a minute nothing new is happening. Above zero it is offset by three sinusoids at golden-ratio-related rates -- mutually irrational, so the motion never audibly repeats -- and the render keeps re-approaching the material from different places.
@@ -98,7 +98,7 @@ const pad = await freeze(source, 600, {
 | `smear` | `0` | Magnitude box-blur. Values <= 0.01 skip it. |
 | `scan` | `0` | How far the capture point drifts over the render. |
 | `windowSec` | `0.25` | |
-| `seed` | `DEFAULT_SEED` | |
+| `seed` | `DEFAULT_SEED` | 64-bit seed. A `number` or `bigint`; same value, same audio. |
 | `onProgress` | -- | Called every 32 hops, then once with `1`. |
 
 ### `granular(input, targetSeconds, options?)`
@@ -127,7 +127,7 @@ const cloud = await granular(source, 300, {
 | `pitchSpread` | `0` | Random per-grain pitch, ± semitones. |
 | `basePitch` | `0` | Pitch applied to every grain, in semitones. |
 | `panSpread` | `0` | Random per-grain stereo position. |
-| `seed` | `DEFAULT_SEED` | |
+| `seed` | `DEFAULT_SEED` | 64-bit seed. A `number` or `bigint`; same value, same audio. |
 | `onProgress` | -- | Called every 256 grains, then once with `1`. |
 
 **Keep `timeJitter` above 0.** At zero, grains fire on a perfectly rigid grid, and when the scrub lingers -- a long target from a short source -- near-identical content re-triggered at exactly `sampleRate / spacing` Hz reads as a buzzy machine-gun. Jitter breaks the grid into an organic rain.

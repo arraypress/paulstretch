@@ -59,7 +59,7 @@ export function mixSeed(x) {
  */
 export function blockSeed(base, b) {
   const bi = BigInt.asUintN(64, BigInt(b) + 1n);
-  return mixSeed((base ^ mixSeed(bi)) & MASK64);
+  return mixSeed((BigInt(base) ^ mixSeed(bi)) & MASK64);
 }
 
 /**
@@ -75,11 +75,16 @@ export function blockSeed(base, b) {
  */
 export class FastRNG {
   /**
-   * @param {bigint} seed - 64-bit seed. Zero is remapped to the golden-ratio
-   *   constant, because xorshift64 is stuck at zero forever otherwise.
+   * @param {bigint|number} seed - 64-bit seed. A number is coerced, so
+   *   `seed: 7` works — the engines take it straight from caller options, and
+   *   failing there surfaces as `Cannot mix BigInt and other types` from deep
+   *   inside the RNG rather than anything the caller can act on. Zero is
+   *   remapped to the golden-ratio constant, because xorshift64 is stuck at
+   *   zero forever otherwise.
    */
   constructor(seed) {
-    const s = seed === 0n ? 0x9e3779b97f4a7c15n : BigInt.asUintN(64, seed);
+    const seed64 = BigInt(seed);
+    const s = seed64 === 0n ? 0x9e3779b97f4a7c15n : BigInt.asUintN(64, seed64);
     this.hi = Number((s >> 32n) & 0xffffffffn) >>> 0;
     this.lo = Number(s & 0xffffffffn) >>> 0;
   }

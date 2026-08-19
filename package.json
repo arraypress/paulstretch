@@ -1,6 +1,6 @@
 {
   "name": "@arraypress/paulstretch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extreme time-stretching and ambient texture synthesis — PaulStretch, spectral freeze, granular cloud, and phase vocoder. Deterministic, dependency-free, runs anywhere.",
   "type": "module",
   "main": "src/index.js",
